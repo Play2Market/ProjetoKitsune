@@ -29,7 +29,7 @@
             MANAGE: 'https://cdn-icons-png.flaticon.com/512/7887/7887701.png',
             TEMPLATE: 'https://w7.pngwing.com/pngs/388/107/png-transparent-write-modify-tool-edit-pen-document-multimedia-solid-px-icon-thumbnail.png',
             ADICIONAR: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiIHdpZHRoPSIxOHB4IiBoZWlnaHQ9IjE4cHgiPjxwYXRoIGQ9Ik0wIDhoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz48cGFhaCBkPSJNMTkgMTNoLTZ2NmgtMnYtNmgtNnYtMmg2di02aDJ2Nmg2djJ6Ii8+PC9zdmc+',
-            REMOVER: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMThweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMThweCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0wIDhoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz48cGFhaCBkPSJNMTkgMTNINVYxMWgxNHYyeiIvPjwvc3ZnPg==',
+            REMOVER: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMThweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMThweCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0wIDhoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz48cGFhaCBkPSJNMTkgMTNINVYxMWgxNHYyeiIvPjwvc3ZnPg==', // Linha Corrigida
             TIMER_CONFIG: 'https://cdn-icons-png.flaticon.com/512/6488/6488603.png'
         },
 
