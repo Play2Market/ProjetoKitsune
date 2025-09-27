@@ -10,40 +10,34 @@
 
     console.log("🎨 Kitsune | Módulo de UI está sendo carregado...");
 
-    const UI = {
-        /**
-         * Cria um elemento HTML com opções e filhos.
-         * @param {string} tag - A tag HTML a ser criada (ex: 'div', 'button').
-         * @param {object} options - Um objeto com os atributos do elemento (ex: { id: 'meu-id', class: 'classe' }).
-         * @param {Array} children - Uma lista de filhos para adicionar ao elemento. Podem ser outros elementos ou strings de texto.
-         * @returns {HTMLElement} O elemento HTML criado.
-         */
-        createElement: (tag, options = {}, children = []) => {
-            // 1. Cria o elemento principal (ex: <div ...></div>)
-            const el = document.createElement(tag);
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const SVG_TAGS = ['svg', 'path', 'polyline'];
 
-            // 2. Adiciona os atributos (id, class, style, etc.)
-            // Ex: se options é { class: 'painel' }, ele faz el.setAttribute('class', 'painel')
+    const UI = {
+        createElement: (tag, options = {}, children = []) => {
+            // Verifica se a tag é um tipo de SVG
+            const isSvg = SVG_TAGS.includes(tag.toLowerCase());
+            
+            // Usa o método correto para criar o elemento
+            const el = isSvg
+                ? document.createElementNS(SVG_NS, tag)
+                : document.createElement(tag);
+
             Object.entries(options).forEach(([key, value]) => {
                 if (value !== undefined && value !== null) {
+                    // Atributos SVG (como 'd' e 'points') não usam setAttribute da mesma forma
                     el.setAttribute(key, value);
                 }
             });
 
-            // 3. Adiciona os filhos dentro do elemento
             children.forEach(child => {
-                // A função .append() é inteligente:
-                // - Se o 'child' for um elemento (como um <h3>), ele o anexa.
-                // - Se o 'child' for um texto (string), ele o adiciona como texto.
                 el.append(child);
             });
 
-            // 4. Retorna o elemento completo e pronto para ser usado
             return el;
         }
     };
 
-    // Expõe nossa fábrica para que outros scripts possam usá-la
     window.UI = UI;
 
 })();
