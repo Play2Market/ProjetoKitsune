@@ -15,7 +15,7 @@
             .kitsune-modal-header h3 { margin: 0; color: #98c379; font-size: 1.3em; flex-grow: 1; text-align: center; }
             .kitsune-modal-close { font-size: 1.5em; font-weight: bold; color: #8a919e; cursor: pointer; border: none; background: none; z-index: 1; margin-left: -20px; }
             .kitsune-modal-close:hover { color: #dcdfe4; }
-            .kitsune-modal-body { padding: 20px; line-height: 1.5; max-height: 60vh; overflow-y: auto;}
+            .kitsune-modal-body { padding: 20px; line-height: 1.5; max-height: 70vh; overflow-y: auto;}
             .kitsune-modal-footer { padding: 10px 20px; border-top: 1px solid var(--kitsune-border); }
             #kitsune-custom-groups-list { border: 1px solid #4a515e; border-radius: 5px; padding: 10px; margin-bottom: 20px; min-height: 120px; background-color: #21252b; }
             .kitsune-custom-group-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid #4a515e; }
@@ -41,7 +41,12 @@
             .kitsune-form-actions { text-align: right; margin-top: 20px; }
             .kitsune-form-actions button { margin-left: 10px; }
             .kitsune-no-groups-message { text-align: center; color: var(--kitsune-text-dark); padding: 20px; }
-            #kitsune-villages-list-textarea { width: 100%; height: 40vh; font-family: monospace; font-size: 12px; resize: none; }
+            
+            /* NOVO: Estilos para o container de duas colunas */
+            #kitsune-villages-list-container { display: flex; gap: 10px; }
+            .kitsune-villages-list-column { flex: 1; display: flex; flex-direction: column; }
+            .kitsune-villages-list-column label { font-size: 11px; color: var(--kitsune-text-dark); margin-bottom: 5px; text-align: center; }
+            .kitsune-villages-list-column textarea { width: 100%; height: 50vh; font-family: monospace; font-size: 12px; resize: none; border: 1px solid var(--kitsune-border); background-color: var(--kitsune-bg-darker); color: var(--kitsune-text); padding: 5px; }
         `);
     }
 
@@ -51,30 +56,52 @@
         document.dispatchEvent(new CustomEvent('kitsuneCustomGroupsUpdated'));
     }
 
+    // ALTERADO: A função inteira foi redesenhada para a nova interface
     function createVillagesListModal() {
         const MODAL_ID = 'kitsune-villages-list-modal';
-        if (document.getElementById(MODAL_ID)) return;
+        if (document.getElementById(MODAL_ID)) document.getElementById(MODAL_ID).remove();
 
-        let villageListText = "Selecione o texto abaixo (Ctrl+A) e copie (Ctrl+C).\nDepois, cole no campo de coordenadas.\n\n";
-        
         const villageMap = window.KitsuneVillageManager.getMap();
         const villages = Object.values(villageMap);
+        
+        let coordsText = '';
+        let detailsText = '';
 
         if (villages.length === 0) {
-            villageListText = "Nenhuma aldeia encontrada. Sincronize suas aldeias no Menu > Forçar Sincronização e tente novamente.";
+            coordsText = "Nenhuma aldeia encontrada.";
+            detailsText = "Sincronize suas aldeias no Menu e tente novamente.";
         } else {
             villages.sort((a, b) => a.name.localeCompare(b.name));
-            villageListText += villages.map(v => `${v.coords} # ${v.name}`).join('\n');
+            
+            const coords = [];
+            const details = [];
+            villages.forEach(v => {
+                const k = 'K' + v.coords.substring(v.coords.length - 5, v.coords.length - 4) + v.coords.substring(1, 2);
+                coords.push(v.coords);
+                details.push(`${v.name} ${k}`);
+            });
+            coordsText = coords.join('\n');
+            detailsText = details.join('\n');
         }
 
         const modalHTML = `
-            <div class="kitsune-modal" style="width: 500px;">
+            <div class="kitsune-modal" style="width: 700px;">
                 <div class="kitsune-modal-header">
                     <h3>Minhas Aldeias</h3>
                     <button class="kitsune-modal-close">&times;</button>
                 </div>
                 <div class="kitsune-modal-body">
-                    <textarea id="kitsune-villages-list-textarea" readonly>${villageListText}</textarea>
+                    <p style="color: var(--kitsune-text-dark); margin-top: 0;">Clique na coluna da esquerda, use <b>Ctrl+A</b> e <b>Ctrl+C</b> para copiar todas as coordenadas.</p>
+                    <div id="kitsune-villages-list-container">
+                        <div class="kitsune-villages-list-column">
+                            <label>Coordenadas (prontas para copiar)</label>
+                            <textarea id="kitsune-coords-list-textarea" readonly>${coordsText}</textarea>
+                        </div>
+                        <div class="kitsune-villages-list-column">
+                            <label>Nome da Aldeia e Continente</label>
+                            <textarea id="kitsune-details-list-textarea" readonly>${detailsText}</textarea>
+                        </div>
+                    </div>
                 </div>
             </div>`;
 
@@ -90,11 +117,25 @@
             if (event.target === modalContainer) closeModal();
         });
 
-        const textarea = modalContainer.querySelector("#kitsune-villages-list-textarea");
-        textarea.focus();
-        textarea.select();
-    }
+        const coordsArea = modalContainer.querySelector("#kitsune-coords-list-textarea");
+        const detailsArea = modalContainer.querySelector("#kitsune-details-list-textarea");
 
+        // NOVO: Lógica de rolagem sincronizada
+        let isSyncingScroll = false;
+        const syncScroll = (source, target) => {
+            if (!isSyncingScroll) {
+                isSyncingScroll = true;
+                target.scrollTop = source.scrollTop;
+                setTimeout(() => { isSyncingScroll = false; }, 50); // Pequeno timeout para evitar loops
+            }
+        };
+
+        coordsArea.addEventListener('scroll', () => syncScroll(coordsArea, detailsArea));
+        detailsArea.addEventListener('scroll', () => syncScroll(detailsArea, coordsArea));
+        
+        coordsArea.focus();
+        coordsArea.select();
+    }
 
     function manageCustomGroupsModal() {
         const MODAL_ID = 'kitsune-custom-groups-modal';
@@ -120,7 +161,7 @@
                         <div id="kitsune-custom-groups-list"></div>
                          <div style="display: flex; gap: 10px; margin-top: 15px;">
                              <button id="kitsune-btn-new-group" class="kitsune-button" style="flex-grow: 1; margin-top: 0;">Criar Novo Grupo</button>
-                             </div>
+                         </div>
                     </div>
                     <div id="kitsune-groups-form-view" style="display: none;">
                         <h4 id="kitsune-form-title"></h4>
@@ -152,7 +193,6 @@
         }
 
         function renderGroupsList() {
-            // (Esta função permanece inalterada)
             const listContainer = modal.querySelector("#kitsune-custom-groups-list");
             listContainer.innerHTML = "";
             if (currentGroups.length === 0) {
@@ -192,9 +232,8 @@
             const groupNameInput = modal.querySelector("#kitsune-group-name");
             const groupCoordsInput = modal.querySelector("#kitsune-group-coords");
 
-            // NOVO: Evento para o link "Mostrar Minhas Aldeias"
             modal.querySelector("#kitsune-link-show-villages").addEventListener("click", (e) => {
-                e.preventDefault(); // Previne que o link '#' mude a URL
+                e.preventDefault();
                 createVillagesListModal();
             });
 
@@ -297,6 +336,7 @@
 
 
     async function getOfficialGroups() {
+        // (Esta função permanece inalterada)
         const groups = [];
         try {
             if (typeof villageDock !== 'undefined' && villageDock.loadLink) {
@@ -318,6 +358,7 @@
     }
 
     async function getCombinedGroups() {
+        // (Esta função permanece inalterada)
         const officialGroups = await getOfficialGroups();
         const customGroups = getCustomGroups().map(g => ({
             id: `custom_${g.id}`,
@@ -327,6 +368,7 @@
     }
 
     function getVillagesFromGroup(groupId) {
+        // (Esta função permanece inalterada)
         if (typeof groupId === 'string' && groupId.startsWith('custom_')) {
             const customId = parseInt(groupId.replace('custom_', ''));
             const customGroups = getCustomGroups();
