@@ -41,6 +41,8 @@
             .kitsune-form-actions { text-align: right; margin-top: 20px; }
             .kitsune-form-actions button { margin-left: 10px; }
             .kitsune-no-groups-message { text-align: center; color: var(--kitsune-text-dark); padding: 20px; }
+            /* NOVO: Estilos para o modal de lista de aldeias */
+            #kitsune-villages-list-textarea { width: 100%; height: 40vh; font-family: monospace; font-size: 12px; resize: none; }
         `);
     }
 
@@ -49,6 +51,54 @@
         localStorage.setItem(CUSTOM_GROUPS_KEY, JSON.stringify(groups));
         document.dispatchEvent(new CustomEvent('kitsuneCustomGroupsUpdated'));
     }
+
+    // NOVO: Função para criar e mostrar o modal com a lista de aldeias do jogador
+    function createVillagesListModal() {
+        const MODAL_ID = 'kitsune-villages-list-modal';
+        if (document.getElementById(MODAL_ID)) return;
+
+        let villageListText = "Selecione o texto abaixo e use Ctrl+C para copiar as coordenadas.\nDepois, cole no campo de coordenadas ao criar/editar um grupo.\n\n";
+        
+        const villageMap = window.KitsuneVillageManager.getMap();
+        const villages = Object.values(villageMap);
+
+        if (villages.length === 0) {
+            villageListText = "Nenhuma aldeia encontrada. Por favor, sincronize suas aldeias primeiro (Menu > Forçar Sincronização).";
+        } else {
+            villages.sort((a, b) => a.name.localeCompare(b.name)); // Ordena por nome
+            villageListText += villages.map(v => `${v.coords} # ${v.name}`).join('\n');
+        }
+
+        const modalHTML = `
+            <div class="kitsune-modal" style="width: 500px;">
+                <div class="kitsune-modal-header">
+                    <h3>Minhas Aldeias</h3>
+                    <button class="kitsune-modal-close">&times;</button>
+                </div>
+                <div class="kitsune-modal-body">
+                    <p style="color: var(--kitsune-text-dark); margin-top: 0;">Lista de todas as suas aldeias para fácil cópia.</p>
+                    <textarea id="kitsune-villages-list-textarea" readonly>${villageListText}</textarea>
+                </div>
+            </div>`;
+
+        const modalContainer = document.createElement("div");
+        modalContainer.id = MODAL_ID;
+        modalContainer.className = "kitsune-modal-overlay show";
+        modalContainer.innerHTML = modalHTML;
+        document.body.appendChild(modalContainer);
+
+        const closeModal = () => modalContainer.remove();
+        modalContainer.querySelector(".kitsune-modal-close").addEventListener("click", closeModal);
+        modalContainer.addEventListener("click", (event) => {
+            if (event.target === modalContainer) closeModal();
+        });
+
+        // Foca e seleciona o texto para o usuário
+        const textarea = modalContainer.querySelector("#kitsune-villages-list-textarea");
+        textarea.focus();
+        textarea.select();
+    }
+
 
     function manageCustomGroupsModal() {
         const MODAL_ID = 'kitsune-custom-groups-modal';
@@ -63,6 +113,7 @@
                 modal = document.getElementById(MODAL_ID);
                 return;
             }
+            // ALTERADO: Botões de Importar/Exportar trocados por "Mostrar Minhas Aldeias"
             const modalHTML = `
             <div class="kitsune-modal">
                 <div class="kitsune-modal-header">
@@ -74,8 +125,7 @@
                         <div id="kitsune-custom-groups-list"></div>
                          <div style="display: flex; gap: 10px; margin-top: 15px;">
                              <button id="kitsune-btn-new-group" class="kitsune-button" style="flex-grow: 1; margin-top: 0;">Criar Novo Grupo</button>
-                             <div class="kitsune-beta-feature"><button class="kitsune-button kitsune-button-secondary" style="margin-top: 0;" disabled>IMPORTAR</button></div>
-                             <div class="kitsune-beta-feature"><button class="kitsune-button kitsune-button-secondary" style="margin-top: 0;" disabled>EXPORTAR</button></div>
+                             <button id="kitsune-btn-show-villages" class="kitsune-button kitsune-button-secondary" style="margin-top: 0;">Mostrar Minhas Aldeias</button>
                          </div>
                     </div>
                     <div id="kitsune-groups-form-view" style="display: none;">
@@ -144,6 +194,9 @@
             const groupNameInput = modal.querySelector("#kitsune-group-name");
             const groupCoordsInput = modal.querySelector("#kitsune-group-coords");
 
+            // NOVO: Evento para o botão "Mostrar Minhas Aldeias"
+            modal.querySelector("#kitsune-btn-show-villages").addEventListener("click", createVillagesListModal);
+
             modal.querySelector("#kitsune-btn-new-group").addEventListener("click", () => {
                 editingGroupId = null;
                 confirmingDeleteId = null;
@@ -161,7 +214,13 @@
 
             modal.querySelector("#kitsune-btn-save-group").addEventListener("click", () => {
                 const name = groupNameInput.value.trim();
-                const coords = groupCoordsInput.value.trim().split("\n").filter(c => c.match(/\d+\|\d+/));
+                const coordsText = groupCoordsInput.value.trim();
+                
+                // Extrai apenas as coordenadas, ignorando nomes ou outros textos após '#'
+                const coords = coordsText.split("\n")
+                    .map(line => line.split('#')[0].trim()) // Pega a parte antes do '#'
+                    .filter(c => c.match(/^\d+\|\d+$/)); // Filtra apenas as que são coordenadas válidas
+
                 if (!name) {
                     alert("O nome do grupo não pode estar vazio.");
                     return;
