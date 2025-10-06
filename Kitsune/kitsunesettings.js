@@ -6,7 +6,7 @@
         return;
     }
 
-    console.log("💾 Kitsune | Módulo de Configurações (v2.3) está sendo carregado...");
+    console.log("💾 Kitsune | Módulo de Configurações (v2.4) está sendo carregado...");
 
     const KitsuneSettingsManager = (function() {
         const PLAYER_ID = typeof game_data !== 'undefined' ? game_data.player.id : 'unknown_player';
@@ -16,12 +16,15 @@
             sidebarWidth: '550px',
             sidebarHeight: '70vh',
             lastTab: 'dashboard',
-            licenseExpiry: null, // Chave para armazenar a data de validade da licença
+            licenseExpiry: null,
             saqueador: {
                 A: {}, B: {}, C: {},
                 distancia: 20,
                 nivelMuralha: 0,
                 ataquesPorAldeia: 1,
+                // NOVO: Adicionado tempos de clique
+                cliqueMin: 1000, // em milissegundos
+                cliqueMax: 2000, // em milissegundos
                 reports: {
                     scouted: true,
                     win: true,
@@ -31,12 +34,13 @@
                     loss_full: false
                 },
                 syncEnabled: { A: false, B: false, C: false },
-                tempoMin: '00:03:00',
-                tempoMax: '00:30:00',
-                autoStart: false
+                tempoMin: '00:05:00', // Padrão de 5 minutos
+                tempoMax: '00:12:00', // Padrão de 12 minutos
+                autoStart: false,
+                modelo: 'A' // Modelo padrão definido
             },
             ferreiro: {
-                modelo: null // Para armazenar o NOME do modelo de pesquisa ativo
+                modelo: null 
             },
             recrutador: [{}, {}],
             construtor: {
@@ -44,7 +48,8 @@
             },
             construtorConfig: {
                 tempoMin: '00:01:00',
-                tempoMax: '00:10:00'
+                tempoMax: '00:10:00',
+                autoStart: false
             },
             recrutadorConfig: {
                 barracks: { lote: '1', filas: '10' },
@@ -77,8 +82,10 @@
 
         function save() {
             try {
-                delete settings.modules;
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+                // Cria uma cópia temporária para não modificar o objeto 'settings' em memória
+                const tempSettings = { ...settings };
+                delete tempSettings.modules; // Remove o estado volátil dos módulos
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(tempSettings));
             } catch (e) {
                 console.error("Kitsune Settings: Erro ao salvar.", e);
             }
@@ -89,7 +96,7 @@
                 const storedSettings = localStorage.getItem(STORAGE_KEY);
                 const loaded = storedSettings ? JSON.parse(storedSettings) : {};
                 settings = deepMerge(defaultSettings, loaded);
-                settings.modules = {};
+                settings.modules = {}; // Sempre reinicia o estado dos módulos
                 console.log(`⚙️ Kitsune Settings: Configurações carregadas para o jogador ${PLAYER_ID}.`);
             } catch (e) {
                 console.error("Kitsune Settings: Erro ao carregar. Usando padrões.", e);
@@ -97,14 +104,11 @@
             }
         }
 
-        function getSettings() {
-            return settings;
-        }
-
+        // Carrega as configurações na inicialização do módulo
         load();
 
         return {
-            get: getSettings,
+            get: () => settings,
             save: save,
         };
     })();
