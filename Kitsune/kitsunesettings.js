@@ -6,7 +6,7 @@
         return;
     }
 
-    console.log("💾 Kitsune | Módulo de Configurações (v2.4) está sendo carregado...");
+    console.log("💾 Kitsune | Módulo de Configurações (v2.5) está sendo carregado...");
 
     const KitsuneSettingsManager = (function() {
         const PLAYER_ID = typeof game_data !== 'undefined' ? game_data.player.id : 'unknown_player';
@@ -22,27 +22,25 @@
                 distancia: 20,
                 nivelMuralha: 0,
                 ataquesPorAldeia: 1,
-                // NOVO: Adicionado tempos de clique
-                cliqueMin: 1000, // em milissegundos
-                cliqueMax: 2000, // em milissegundos
-                reports: {
-                    scouted: true,
-                    win: true,
-                    loss: false,
-                    win_damage: false,
-                    loss_scout: false,
-                    loss_full: false
-                },
+                cliqueMin: 1000,
+                cliqueMax: 2000,
+                reports: { scouted: true, win: true, loss: false, win_damage: false, loss_scout: false, loss_full: false },
                 syncEnabled: { A: false, B: false, C: false },
-                tempoMin: '00:05:00', // Padrão de 5 minutos
-                tempoMax: '00:12:00', // Padrão de 12 minutos
+                tempoMin: '00:05:00',
+                tempoMax: '00:12:00',
                 autoStart: false,
-                modelo: 'A' // Modelo padrão definido
+                modelo: 'A'
             },
             ferreiro: {
-                modelo: null 
+                modelo: null
             },
-            recrutador: [{}, {}],
+            // A estrutura de recrutador já está pronta para a nova lógica
+            recrutador: [
+                // Cada objeto aqui representa uma linha na UI
+                // Ex: { grupo: 'custom_123', spear: 1000, sword: 1000, ... }
+                {}, 
+                {}
+            ],
             construtor: {
                 autoStart: false
             },
@@ -52,11 +50,11 @@
                 autoStart: false
             },
             recrutadorConfig: {
-                barracks: { lote: '1', filas: '10' },
-                stable: { lote: '1', filas: '10' },
-                garage: { lote: '1', filas: '10' },
-                tempoMin: '00:02:00',
-                tempoMax: '00:20:00',
+                barracks: { lote: '5', filas: '10' },
+                stable: { lote: '5', filas: '10' },
+                garage: { lote: '3', filas: '10' },
+                tempoMin: '00:04:00',
+                tempoMax: '00:12:00',
                 autoStart: false
             },
             modules: {}
@@ -82,9 +80,8 @@
 
         function save() {
             try {
-                // Cria uma cópia temporária para não modificar o objeto 'settings' em memória
                 const tempSettings = { ...settings };
-                delete tempSettings.modules; // Remove o estado volátil dos módulos
+                delete tempSettings.modules;
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(tempSettings));
             } catch (e) {
                 console.error("Kitsune Settings: Erro ao salvar.", e);
@@ -96,7 +93,7 @@
                 const storedSettings = localStorage.getItem(STORAGE_KEY);
                 const loaded = storedSettings ? JSON.parse(storedSettings) : {};
                 settings = deepMerge(defaultSettings, loaded);
-                settings.modules = {}; // Sempre reinicia o estado dos módulos
+                settings.modules = {};
                 console.log(`⚙️ Kitsune Settings: Configurações carregadas para o jogador ${PLAYER_ID}.`);
             } catch (e) {
                 console.error("Kitsune Settings: Erro ao carregar. Usando padrões.", e);
@@ -104,7 +101,6 @@
             }
         }
 
-        // Carrega as configurações na inicialização do módulo
         load();
 
         return {
