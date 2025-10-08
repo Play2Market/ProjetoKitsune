@@ -42,6 +42,14 @@
                 {}
             ],
             construtor: {
+                regras: [
+                    { grupo: '0', filas: (typeof game_data !== 'undefined' && game_data.player.premium ? 2 : 1) } // Começa com uma regra padrão
+                ],
+                modelo: 'default',
+                fazenda: '90%',
+                armazem: '90%',
+                nivelMuralha: '20',
+                nivelEsconderijo: '0',
                 autoStart: false
             },
             construtorConfig: {
@@ -111,3 +119,4 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
