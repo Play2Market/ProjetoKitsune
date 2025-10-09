@@ -29,7 +29,7 @@
                 tempoMin: '00:05:00',
                 tempoMax: '00:12:00',
                 autoStart: false,
-                modelo: 'A'
+                modelo: 'A',
                 advanced: {
                     enabled: false,
                     rules: []
@@ -58,7 +58,7 @@
             construtorConfig: {
                 tempoMin: '00:01:00',
                 tempoMax: '00:10:00',
-                autoStart: false
+                autoStart: false,
                 advanced: {
                     enabled: false,
                     rules: []
@@ -69,7 +69,7 @@
                 garage: { lote: '3', filas: '10' },
                 tempoMin: '00:04:00',
                 tempoMax: '00:12:00',
-                autoStart: false
+                autoStart: false,
                 advanced: {
                     enabled: false,
                     rules: []
@@ -128,6 +128,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
