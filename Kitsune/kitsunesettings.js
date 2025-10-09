@@ -56,6 +56,9 @@
                 tempoMin: '00:01:00',
                 tempoMax: '00:10:00',
                 autoStart: false
+                advanced: {
+                    enabled: false,
+                    rules: []
             },
             recrutadorConfig: {
                 barracks: { lote: '5', filas: '10' },
@@ -119,4 +122,5 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
