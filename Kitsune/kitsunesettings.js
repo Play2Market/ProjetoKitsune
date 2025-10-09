@@ -33,17 +33,15 @@
                 advanced: {
                     enabled: false,
                     rules: []
-            },
+                }
+            }, // ✅ VÍRGULA ADICIONADA AQUI
             ferreiro: {
                 modelo: null
-            },
-            // A estrutura de recrutador já está pronta para a nova lógica
+            }, // ✅ VÍRGULA ADICIONADA AQUI
             recrutador: [
-                // Cada objeto aqui representa uma linha na UI
-                // Ex: { grupo: 'custom_123', spear: 1000, sword: 1000, ... }
                 {}, 
                 {}
-            ],
+            ], // ✅ VÍRGULA ADICIONADA AQUI
             construtor: {
                 regras: [
                     { grupo: '0', filas: (typeof game_data !== 'undefined' && game_data.player.premium ? 2 : 1) } // Começa com uma regra padrão
@@ -54,7 +52,7 @@
                 nivelMuralha: '20',
                 nivelEsconderijo: '0',
                 autoStart: false
-            },
+            }, // ✅ VÍRGULA ADICIONADA AQUI
             construtorConfig: {
                 tempoMin: '00:01:00',
                 tempoMax: '00:10:00',
@@ -62,7 +60,8 @@
                 advanced: {
                     enabled: false,
                     rules: []
-            },
+                }
+            }, // ✅ VÍRGULA ADICIONADA AQUI
             recrutadorConfig: {
                 barracks: { lote: '5', filas: '10' },
                 stable: { lote: '5', filas: '10' },
@@ -73,10 +72,11 @@
                 advanced: {
                     enabled: false,
                     rules: []
-            },
+                }
+            }, // ✅ VÍRGULA ADICIONADA AQUI
             modules: {}
         };
-
+        
         let settings = {};
 
         function deepMerge(target, source) {
@@ -128,6 +128,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
