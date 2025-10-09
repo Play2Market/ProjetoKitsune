@@ -76,7 +76,6 @@
             }, // ✅ VÍRGULA ADICIONADA AQUI
             modules: {}
         };
-        
         let settings = {};
 
         function deepMerge(target, source) {
@@ -128,6 +127,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
