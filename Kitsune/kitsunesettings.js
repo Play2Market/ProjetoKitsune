@@ -30,6 +30,9 @@
                 tempoMax: '00:12:00',
                 autoStart: false,
                 modelo: 'A'
+                advanced: {
+                    enabled: false,
+                    rules: []
             },
             ferreiro: {
                 modelo: null
@@ -67,6 +70,9 @@
                 tempoMin: '00:04:00',
                 tempoMax: '00:12:00',
                 autoStart: false
+                advanced: {
+                    enabled: false,
+                    rules: []
             },
             modules: {}
         };
@@ -122,5 +128,6 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
