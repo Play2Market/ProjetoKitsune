@@ -26,8 +26,8 @@
                 cliqueMax: 2000,
                 reports: { scouted: true, win: true, loss: false, win_damage: false, loss_scout: false, loss_full: false },
                 syncEnabled: { A: false, B: false, C: false },
-                tempoMin: '00:05:00',
-                tempoMax: '00:12:00',
+                tempoMin: '00:03:00',
+                tempoMax: '00:30:00',
                 autoStart: false,
                 modelo: 'A',
                 advanced: {
@@ -66,8 +66,8 @@
                 barracks: { lote: '5', filas: '10' },
                 stable: { lote: '5', filas: '10' },
                 garage: { lote: '3', filas: '10' },
-                tempoMin: '00:04:00',
-                tempoMax: '00:12:00',
+                tempoMin: '00:02:00',
+                tempoMax: '00:20:00',
                 autoStart: false,
                 advanced: {
                     enabled: false,
@@ -75,8 +75,8 @@
                 }
             }, // ✅ VÍRGULA ADICIONADA AQUI
             mercadorConfig: {
-                tempoMin: '00:15:00',
-                tempoMax: '00:30:00',
+                tempoMin: '00:04:00',
+                tempoMax: '00:40:00',
                 autoStart: false,
                 advanced: {
                     enabled: false,
@@ -136,6 +136,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
