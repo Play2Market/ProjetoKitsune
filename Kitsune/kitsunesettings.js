@@ -74,6 +74,15 @@
                     rules: []
                 }
             }, // ✅ VÍRGULA ADICIONADA AQUI
+            mercadorConfig: {
+                tempoMin: '00:15:00',
+                tempoMax: '00:30:00',
+                autoStart: false,
+                advanced: {
+                    enabled: false,
+                    rules: []
+                }
+            },
             modules: {}
         };
         let settings = {};
@@ -127,6 +136,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
