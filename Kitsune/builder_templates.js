@@ -331,10 +331,16 @@
             modal.id = 'kitsune-builder-modal';
             modal.className = 'kbm-overlay';
             modal.style.display = 'none';
-            modal.innerHTML = `
+           modal.innerHTML = `
                 <div class="kbm-container">
                     <div class="kbm-header">
                         <h2>Modelos de Construção</h2>
+                        
+                        <div class="kbm-demolish-container">
+                            <input type="checkbox" id="kbm-demolish-checkbox">
+                            <label for="kbm-demolish-checkbox">DEMOLIR EDIFÍCIOS EXCEDENTES?</label>
+                        </div>
+                        
                         <button class="kbm-cancel-btn">&times;</button>
                     </div>
                     <div class="kbm-body">
@@ -457,3 +463,4 @@
     window.addEventListener('load', () => KitsuneBuilderModal.init());
 
 })();
+
