@@ -105,21 +105,18 @@
             const nameInput = editorContainer.querySelector('#kbm-template-name');
             const queueContainer = editorContainer.querySelector('.kbm-queue-list');
             
-            // ✅ NOVO: Selecionamos o checkbox de demolição
-            const demolishCheckbox = editorContainer.querySelector('#kbm-demolish-checkbox');
+            // ✅ CORREÇÃO: Buscamos o checkbox a partir do elemento principal do modal
+            const demolishCheckbox = this.modalElement.querySelector('#kbm-demolish-checkbox');
 
             if (template) {
                 nameInput.value = template.name;
                 queueContainer.innerHTML = [...template.queue].reverse().map((item) => this.createQueueRowHTML(item.building, item.level)).join('');
                 
-                // ✅ NOVO: Carregamos o estado salvo do checkbox.
-                // Usamos `|| false` para garantir que funcione com modelos antigos que não têm essa propriedade.
                 demolishCheckbox.checked = template.demolishExcess || false;
             } else {
                 nameInput.value = '';
                 queueContainer.innerHTML = '';
                 
-                // ✅ NOVO: Garantimos que o checkbox esteja desmarcado ao criar um novo modelo.
                 demolishCheckbox.checked = false;
             }
              this.clearValidation(nameInput);
@@ -480,6 +477,7 @@
     window.addEventListener('load', () => KitsuneBuilderModal.init());
 
 })();
+
 
 
 
