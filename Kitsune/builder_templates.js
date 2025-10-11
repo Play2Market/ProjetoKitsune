@@ -387,11 +387,7 @@
                            ${pickerHTML}
                         </div>
                     </div>
-                    <div class="kbm-footer" style="display: flex; justify-content: space-between; align-items: center;">
-                         <div style="display: flex; gap: 10px;">
-                             <div class="kitsune-beta-feature"><button class="kbm-btn" style="background-color: var(--kitsune-bg-light);" disabled>IMPORTAR</button></div>
-                             <div class="kitsune-beta-feature"><button class="kbm-btn" style="background-color: var(--kitsune-bg-light);" disabled>EXPORTAR</button></div>
-                         </div>
+                    <div class="kbm-footer" style="display: flex; justify-content: flex-end; align-items: center;">
                         <button class="kbm-btn kbm-save-btn">Salvar Modelo</button>
                     </div>
                 </div>
@@ -477,6 +473,7 @@
     window.addEventListener('load', () => KitsuneBuilderModal.init());
 
 })();
+
 
 
 
