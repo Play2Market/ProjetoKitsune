@@ -230,7 +230,7 @@
                   errorEl.style.display = 'none';
              }
         },
-        handleSave() {
+         handleSave() {
             const nameInput = this.modalElement.querySelector('#kbm-template-name');
             const name = nameInput.value.trim();
             if (!name) {
@@ -243,6 +243,10 @@
                  return;
             }
 
+            // ✅ NOVO: Pega o estado do checkbox de demolição
+            const demolishCheckbox = this.modalElement.querySelector('#kbm-demolish-checkbox');
+            const demolish = demolishCheckbox.checked;
+
             const queue = Array.from(this.modalElement.querySelectorAll('.kbm-queue-item')).map(row => ({
                 building: row.dataset.buildingId,
                 level: parseInt(row.querySelector('.kbm-level-input').value, 10)
@@ -252,9 +256,11 @@
                 const index = this.templates.findIndex(t => t.id === this.currentTemplateId);
                 this.templates[index].name = name;
                 this.templates[index].queue = queue;
+                this.templates[index].demolishExcess = demolish; // ✅ NOVO: Salva o estado no modelo existente
             } else {
                  const newId = Date.now();
-                 this.templates.push({ id: newId, name: name, queue: queue });
+                 // ✅ NOVO: Salva o estado no novo modelo
+                 this.templates.push({ id: newId, name: name, queue: queue, demolishExcess: demolish });
                  this.currentTemplateId = newId;
             }
             this.saveTemplates();
@@ -463,4 +469,5 @@
     window.addEventListener('load', () => KitsuneBuilderModal.init());
 
 })();
+
 
