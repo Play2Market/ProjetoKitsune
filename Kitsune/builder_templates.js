@@ -385,6 +385,16 @@
                 .kbm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 20000; display: flex; align-items: center; justify-content: center; font-family: Verdana, sans-serif; font-size: 12px; }
                 .kbm-container { width: 900px; max-width: 90vw; background-color: var(--kbm-bg); border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
                 .kbm-header { padding: 15px 20px; border-bottom: 1px solid var(--kbm-border); display: flex; justify-content: space-between; align-items: center; }
+                
+                /* --- NOVO ESTILO ADICIONADO --- */
+                .kbm-demolish-container {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px; /* Espaço entre o checkbox e o texto */
+                    color: var(--kbm-text);
+                    font-size: 0.9em;
+                    font-weight: normal;
+                }
                 .kbm-header h2 { margin: 0 20px; color: var(--kbm-accent); font-size: 1.4em; text-align: center; flex-grow: 1; }
                 .kbm-body { display: grid; grid-template-columns: 200px 1fr 140px; height: 65vh; }
                 .kbm-sidebar, .kbm-picker, .kbm-queue-list, .kbm-list, .kbm-summary-table-container { scrollbar-width: thin; scrollbar-color: var(--kbm-border) var(--kbm-bg-darker); }
@@ -445,4 +455,5 @@
     };
     window.KitsuneBuilderModal = KitsuneBuilderModal;
     window.addEventListener('load', () => KitsuneBuilderModal.init());
+
 })();
