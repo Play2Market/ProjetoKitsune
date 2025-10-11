@@ -15,7 +15,8 @@
             DASHBOARD: 'dashboard',
             CONSTRUTOR: 'Construtor',
             RECRUTADOR: 'Recrutador',
-            SAQUEADOR: 'Saqueador'
+            SAQUEADOR: 'Saqueador',
+            MERCADOR: 'Mercador'
         },
 
         ICONS: {
@@ -57,4 +58,5 @@
     window.KitsuneConstants = constants;
 
 })();
+
 
