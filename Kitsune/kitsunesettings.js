@@ -82,13 +82,12 @@
                     enabled: false,
                     rules: []
                 },
-                // ✅ NOVAS CONFIGURAÇÕES ADICIONADAS AQUI
                 balance: {
-                    wood: 33, // Porcentagem alvo para Madeira
-                    stone: 33, // Porcentagem alvo para Argila
-                    iron: 34, // Porcentagem alvo para Ferro
-                    merchants: 5, // Número de mercadores a usar
-                    enabled: false // Se o balanceamento automático está ativo
+                    wood: 33,
+                    stone: 33,
+                    iron: 34,
+                    merchants: 5,
+                    enabled: false
                 }
             },
             modules: {}
@@ -144,6 +143,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
