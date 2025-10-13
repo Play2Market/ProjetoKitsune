@@ -87,7 +87,10 @@
                     stone: 33,
                     iron: 34,
                     merchants: 5,
-                    enabled: false
+                    enabled: false,
+                    // ✅ NOVAS CONFIGURAÇÕES ADICIONADAS
+                    duration: 96, // Duração máxima da viagem em horas
+                    filter: 'friends' // Filtro de ofertas (all, friends, no_enemies)
                 }
             },
             modules: {}
@@ -143,6 +146,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
