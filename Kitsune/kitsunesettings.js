@@ -75,12 +75,20 @@
                 }
             }, // ✅ VÍRGULA ADICIONADA AQUI
             mercadorConfig: {
-                tempoMin: '00:04:00',
-                tempoMax: '00:40:00',
+                tempoMin: '00:15:00',
+                tempoMax: '00:30:00',
                 autoStart: false,
                 advanced: {
                     enabled: false,
                     rules: []
+                },
+                // ✅ NOVAS CONFIGURAÇÕES ADICIONADAS AQUI
+                balance: {
+                    wood: 33, // Porcentagem alvo para Madeira
+                    stone: 33, // Porcentagem alvo para Argila
+                    iron: 34, // Porcentagem alvo para Ferro
+                    merchants: 5, // Número de mercadores a usar
+                    enabled: false // Se o balanceamento automático está ativo
                 }
             },
             modules: {}
@@ -136,6 +144,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
