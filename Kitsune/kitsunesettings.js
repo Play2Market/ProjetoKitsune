@@ -89,8 +89,8 @@
                     merchants: 1,
                     enabled: false,
                     // ✅ NOVAS CONFIGURAÇÕES ADICIONADAS
-                    duration: 96, // Duração máxima da viagem em horas
-                    filter: 'friends' // Filtro de ofertas (all, friends, no_enemies)
+                    duration: 5, // Duração máxima da viagem em horas
+                    filter: 'all' // Filtro de ofertas (all, friends, no_enemies)
                 }
             },
             modules: {}
@@ -146,6 +146,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
