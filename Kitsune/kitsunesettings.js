@@ -83,10 +83,10 @@
                     rules: []
                 },
                 balance: {
-                    wood: 33,
-                    stone: 33,
-                    iron: 34,
-                    merchants: 5,
+                    wood: 75,
+                    stone: 75,
+                    iron: 75,
+                    merchants: 1,
                     enabled: false,
                     // ✅ NOVAS CONFIGURAÇÕES ADICIONADAS
                     duration: 96, // Duração máxima da viagem em horas
@@ -146,6 +146,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
