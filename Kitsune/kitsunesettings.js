@@ -83,13 +83,13 @@
                     rules: []
                 },
                 balance: {
-                    wood: 33,
-                    stone: 33,
-                    iron: 34,
+                    wood: 75,
+                    stone: 75,
+                    iron: 75,
                     merchants: 5,
                     enabled: false,
-                    duration: 96,
-                    filter: 'friends'
+                    duration: 5,
+                    filter: 'all'
                 },
                 // ✅ CONFIGURAÇÕES ATUALIZADAS PARA "CRIAR OFERTA"
                 createOffer: {
@@ -154,6 +154,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
