@@ -83,14 +83,22 @@
                     rules: []
                 },
                 balance: {
-                    wood: 75,
-                    stone: 75,
-                    iron: 75,
-                    merchants: 1,
+                    wood: 33,
+                    stone: 33,
+                    iron: 34,
+                    merchants: 5,
                     enabled: false,
-                    // ✅ NOVAS CONFIGURAÇÕES ADICIONADAS
-                    duration: 5, // Duração máxima da viagem em horas
-                    filter: 'all' // Filtro de ofertas (all, friends, no_enemies)
+                    duration: 96,
+                    filter: 'all'
+                },
+                // ✅ NOVAS CONFIGURAÇÕES ADICIONADAS AQUI
+                createOffer: {
+                    sell_amount: 1000,
+                    sell_resource: 'stone',
+                    buy_amount: 1000,
+                    buy_resource: 'wood',
+                    multi: 1, // Quantas vezes oferecer
+                    max_time: 5 // Duração máxima da viagem em horas
                 }
             },
             modules: {}
@@ -146,6 +154,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
