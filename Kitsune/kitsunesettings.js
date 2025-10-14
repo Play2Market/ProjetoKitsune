@@ -88,7 +88,7 @@
                     iron: 34,
                     merchants: 5,
                     enabled: false,
-                    duration: 96,
+                    duration: 5,
                     filter: 'all'
                 },
                 // ✅ NOVAS CONFIGURAÇÕES ADICIONADAS AQUI
@@ -154,6 +154,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
