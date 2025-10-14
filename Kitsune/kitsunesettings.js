@@ -88,17 +88,17 @@
                     iron: 34,
                     merchants: 5,
                     enabled: false,
-                    duration: 5,
-                    filter: 'all'
+                    duration: 96,
+                    filter: 'friends'
                 },
-                // ✅ NOVAS CONFIGURAÇÕES ADICIONADAS AQUI
+                // ✅ CONFIGURAÇÕES ATUALIZADAS PARA "CRIAR OFERTA"
                 createOffer: {
-                    sell_amount: 1000,
-                    sell_resource: 'stone',
-                    buy_amount: 1000,
-                    buy_resource: 'wood',
-                    multi: 1, // Quantas vezes oferecer
-                    max_time: 5 // Duração máxima da viagem em horas
+                    sell_value: 80, // Valor em %
+                    sell_type: 'greatest', // Padrão selecionado
+                    buy_value: 100, // Valor em %
+                    buy_type: 'least', // Padrão selecionado
+                    offer_count: 1, // Padrão é 1
+                    max_time: 5
                 }
             },
             modules: {}
@@ -154,6 +154,7 @@
 
     window.KitsuneSettingsManager = KitsuneSettingsManager;
 })();
+
 
 
 
